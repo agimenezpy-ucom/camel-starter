@@ -1,0 +1,12 @@
+.gradle
+build
+out
+.gradle
+*.log
+*.tmp
+.git
+.gitignore
+Dockerfile
+docker-compose*.yml
+docker-compose*.yaml
+**/*.iml

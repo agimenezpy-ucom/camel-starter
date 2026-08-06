@@ -1,12 +1,14 @@
-FROM eclipse-temurin:21-jdk
+# Build stage: compile the Spring Boot Camel application with Gradle
+FROM gradle:9.7-jdk21 AS build
+WORKDIR /home/gradle/project
+COPY build.gradle settings.gradle ./
+COPY src ./src
+COPY routes ./routes
+RUN gradle --no-daemon clean bootJar
 
-RUN apt-get update && apt-get install -y --no-install-recommends curl && rm -rf /var/lib/apt/lists/*
-
-RUN curl -L https://sh.jbang.dev | bash && \
-    mv ~/.jbang/bin/* /usr/local/bin/
-
+# Runtime stage: run the built Spring Boot fat jar
+FROM eclipse-temurin:21-jre AS runtime
 WORKDIR /app
-
-COPY routes /app/routes
-
-CMD ["camel", "run", "routes/*.yaml"]
+COPY --from=build /home/gradle/project/build/libs/*.jar /app/app.jar
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]

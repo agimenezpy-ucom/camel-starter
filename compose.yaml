@@ -6,6 +6,8 @@ services:
       - "8080:8080"
     volumes:
       - ./routes:/app/routes
+      - ${HOME}/.m2:/root/.m2
+      - ${HOME}/.gradle:/home/gradle/.gradle
     environment:
       - CAMEL_LOG_LEVEL=INFO
     restart: unless-stopped
