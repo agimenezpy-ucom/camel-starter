@@ -1,0 +1,12 @@
+- route:
+    id: hello-world-timer
+    description: "Simple timer route that logs a message every 5 seconds"
+    from:
+      uri: timer:hello
+      parameters:
+        period: 5000
+      steps:
+        - setBody:
+            constant: "Hello World from Camel!"
+        - log:
+            message: "${body}"

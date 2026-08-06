@@ -1,0 +1,36 @@
+- route:
+    id: rest-api
+    description: "Exposes a simple REST endpoint"
+    restConfiguration:
+      component: platform-http
+      host: 0.0.0.0
+      port: 8080
+      apiProperty:
+        - key: api.title
+          value: "Camel REST API"
+        - key: api.version
+          value: "1.0.0"
+    rest:
+      path: /hello
+      get:
+        - route:
+            id: get-hello
+            steps:
+              - setBody:
+                  constant: '{"message": "Hello from Camel REST!"}'
+              - setHeader:
+                  name: Content-Type
+                  constant: application/json
+              - log:
+                  message: "GET /hello called"
+      post:
+        - route:
+            id: post-hello
+            steps:
+              - log:
+                  message: "POST /hello received: ${body}"
+              - setBody:
+                  simple: '{"received": "${body}", "status": "ok"}'
+              - setHeader:
+                  name: Content-Type
+                  constant: application/json

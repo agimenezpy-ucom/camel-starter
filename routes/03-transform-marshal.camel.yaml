@@ -1,0 +1,31 @@
+- route:
+    id: transform-json
+    description: "Transforms and marshals data to/from JSON"
+    from:
+      uri: timer:json
+      parameters:
+        period: 4000
+      steps:
+        - process:
+            ref: "#class:org.apache.camel.builder.java.ExpressionBuilder"
+        - setBody:
+            groovy: |
+              def now = new java.util.Date()
+              def timestamp = new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(now)
+              [
+                "timestamp": timestamp,
+                "message": "Event from Camel",
+                "version": "1.0.0",
+                "value": Math.random() * 100
+              ]
+        - marshal:
+            json:
+              library: Jackson
+        - log:
+            message: "JSON: ${body}"
+        - unmarshal:
+            json:
+              library: Jackson
+              unmarshalType: "java.util.Map"
+        - log:
+            message: "Unmarshalled: ${body}"

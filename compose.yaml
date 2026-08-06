@@ -1,0 +1,11 @@
+services:
+  camel:
+    build: .
+    container_name: camel-starter
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./routes:/app/routes
+    environment:
+      - CAMEL_LOG_LEVEL=INFO
+    restart: unless-stopped
