@@ -1,12 +1,9 @@
-FROM eclipse-temurin:21-jdk
-
-RUN apt-get update && apt-get install -y --no-install-recommends curl && rm -rf /var/lib/apt/lists/*
-
-RUN curl -L https://sh.jbang.dev | bash && \
-    mv ~/.jbang/bin/* /usr/local/bin/
-
+FROM jbangdev/jbang:latest
 WORKDIR /app
 
 COPY routes /app/routes
 
-CMD ["camel", "run", "routes/*.yaml"]
+RUN jbang app install camel@apache/camel
+
+EXPOSE 8080
+ENTRYPOINT ["camel", "run", "routes/*.yaml"]
