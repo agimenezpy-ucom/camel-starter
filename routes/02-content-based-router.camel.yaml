@@ -11,16 +11,15 @@
             simple: "${random(1,100)}"
         - choice:
             when:
-              - predicate:
-                  simple: "${body} < 30"
+              - simple:
+                  expression: "${body} < 30"
                 steps:
                   - setBody:
                       constant: "Low value (< 30)"
                   - log:
                       message: "Route 1: ${body}"
-            when:
-              - predicate:
-                  simple: "${body} < 70"
+              - simple:
+                  expression: "${body} < 70"
                 steps:
                   - setBody:
                       constant: "Medium value (30-70)"

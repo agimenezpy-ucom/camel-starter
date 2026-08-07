@@ -6,8 +6,6 @@
       parameters:
         period: 4000
       steps:
-        - process:
-            ref: "#class:org.apache.camel.builder.java.ExpressionBuilder"
         - setBody:
             groovy: |
               def now = new java.util.Date()
