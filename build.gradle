@@ -21,6 +21,7 @@ dependencies {
     implementation 'org.apache.camel.springboot:camel-spring-boot-starter:4.1.0'
     implementation 'org.apache.camel.springboot:camel-yaml-dsl-starter:4.1.0'
     implementation 'org.apache.camel.springboot:camel-platform-http-starter:4.1.0'
+    implementation 'org.apache.camel.springboot:camel-groovy-starter:4.1.0'
     implementation 'org.apache.camel.springboot:camel-rest-starter:4.1.0'
     implementation 'org.apache.camel.springboot:camel-jackson-starter:4.1.0'
     implementation 'org.apache.camel:camel-timer:4.1.0'
@@ -30,8 +31,8 @@ dependencies {
 sourceSets {
     main {
         resources {
-            srcDir 'src/main/resources'
             srcDir 'routes'
+            include '**/*.properties'
             include '**/*.yaml'
         }
     }
